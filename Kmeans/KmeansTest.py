@@ -11,7 +11,7 @@ from Kmeans import KMeans
 
 class KmeansTest(unittest.TestCase):
     
-    def testClasterPartition(self):
+    def testOneClaster(self):
         points = np.array([[1,2],[2,2], [3,1], [0,-5], [1,-7], [3, -6]])
         alg = KMeans(points)
         result = alg.get_clasters(1)
