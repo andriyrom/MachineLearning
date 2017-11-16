@@ -13,9 +13,14 @@ class KMeans:
     
     def get_clasters(self, count):
         clasters = []
+        calc_again = True
         clasters_centers = self.__init_centers(count)
-        distances = self.__calc_distances(clasters_centers)
-        clasters = self.__split_into_clasters(distances, clasters_centers)
+        while (calc_again):
+            distances = self.__calc_distances(clasters_centers)
+            clasters = self.__split_into_clasters(distances, clasters_centers)
+            new_centers = self.__calc_new_centers(clasters)
+            calc_again = self.__is_centers_far(clasters_centers, new_centers)
+            clasters_centers = new_centers
         return clasters
     
     def __init_centers(self, count):
@@ -38,6 +43,18 @@ class KMeans:
             claster_points = self.__points[point_claster_indexes == index]
             clasters.append(Claster(clasters_centers[index], claster_points))
         return clasters
+    
+    def __calc_new_centers(self, clasters):
+        num_clasters = len(clasters)
+        new_centers = np.zeros((num_clasters, 2))
+        for index in range(num_clasters):
+            new_centers[index] = np.mean(clasters[index].points, axis=0)
+        return new_centers
+    
+    def __is_centers_far(self, old_centers, new_centers):
+        diffs = old_centers - new_centers
+        distances = np.apply_along_axis(np.linalg.norm, 1, diffs)
+        return distances.max() > 0.01
     
 class Claster:
     #Center = ndarray["x", "y"]
