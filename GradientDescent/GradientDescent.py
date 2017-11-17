@@ -11,11 +11,18 @@ class GradientDescent:
     # function -> f(x), where x - numpy.array
     def __init__(self, function):
         self.__step = 0.02
+        self.__descent_step = 0.01
         self.__func = function
     
     def optimize(self, start_point):
-        gradient = self.calc_grad(start_point)
-        return np.array([-1])
+        point = start_point.astype("float64")
+        gradient = self.calc_grad(point)
+        new_step = True
+        while (new_step):
+            point -= self.__descent_step * gradient
+            gradient = self.calc_grad(point)
+            new_step = np.abs(gradient).max() > self.__descent_step
+        return point
     
     def calc_grad(self, point):
         p_count = point.size

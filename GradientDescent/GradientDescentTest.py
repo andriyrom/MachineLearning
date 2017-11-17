@@ -16,7 +16,10 @@ class GradientDescentTest(unittest.TestCase):
         opt = grad(f)
         res = opt.optimize(np.array([5]))
         expected = np.array([0])
-        np.testing.assert_allclose(res,expected, 1e-3)
+        np.testing.assert_allclose(res,expected, atol=1e-2)
+        
+        res = opt.optimize(np.array([-5]))
+        np.testing.assert_allclose(res,expected, atol=2e-2)
     
     def testParabolaGradient(self):
         points = np.array([[0],[1],[-1]])
