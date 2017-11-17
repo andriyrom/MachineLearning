@@ -28,14 +28,57 @@ class GradientDescentTest(unittest.TestCase):
         
         res = opt.calc_grad(points[0])
         expected = np.array([0.02])
-        np.testing.assert_allclose(res,expected, 1e-2)
+        np.testing.assert_allclose(res,expected, atol=1e-2)
         
         res = opt.calc_grad(points[1])
         expected = np.array([2.02])
-        np.testing.assert_allclose(res,expected, 1e-2)
+        np.testing.assert_allclose(res,expected, atol=1e-2)
         
         res = opt.calc_grad(points[2])
         expected = np.array([-1.98])
-        np.testing.assert_allclose(res,expected, 1e-2)
-
+        np.testing.assert_allclose(res,expected, atol=1e-2)
+    
+    def testToleranceParameter(self):
+        f = lambda x: x[0]**2
+        opt = grad(f)
+        expected = 0.01        
+        self.assertEqual(opt.tolerance, expected)
+        
+        expected = 0.003
+        opt = grad(f, expected)
+        self.assertEqual(opt.tolerance, expected)
+    
+    def testDescent_StepParameter(self):
+        f = lambda x: x[0]**2
+        opt = grad(f)
+        expected = 0.01        
+        self.assertEqual(opt.descent_step, expected)
+        
+        expected = 0.003
+        opt = grad(f, desc_step= expected)
+        self.assertEqual(opt.descent_step, expected)
+        
+        expected = 0.003
+        tol = 0.01
+        opt = grad(f, tol, expected)
+        self.assertEqual(opt.descent_step, expected)
+    
+    def testDerivative_StepParameter(self):
+        f = lambda x: x[0]**2
+        opt = grad(f)
+        expected = 0.01        
+        self.assertEqual(opt.derivative_step, expected)
+        
+        expected = 0.003
+        opt = grad(f, der_step= expected)
+        self.assertEqual(opt.derivative_step, expected)
+        
+        expected = 0.003
+        tol = desc = 0.01
+        opt = grad(f, tol, der_step= expected)
+        self.assertEqual(opt.derivative_step, expected)
+        opt = grad(f, tol, desc, expected)
+        self.assertEqual(opt.derivative_step, expected)
+    
+    
 unittest.main()        
