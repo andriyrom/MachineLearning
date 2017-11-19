@@ -25,7 +25,7 @@ class Linear:
         params_count = self.__x.shape[1]
         cost_func = self.__get_cost_func()
         init_vals = self.__init_params(params_count)
-        min_search = grad(cost_func, tol=1e-6, desc_step = 0.001)
+        min_search = grad(cost_func, tol=1e-3, der_step = 1e-5, desc_step = 0.001, mom=0.2)
         params = min_search.optimize(init_vals)
         return self.__lin_func(params)
     

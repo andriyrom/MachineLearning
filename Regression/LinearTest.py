@@ -27,12 +27,12 @@ class LinearTest(unittest.TestCase):
         x_test = np.linspace(20, 27, samples_count).reshape((samples_count, 1))
         y_test = self.lin_func(x_test, params)
         y_res = reg_func(x_test)
-        np.testing.assert_allclose(y_res,y_test, atol=1e-1)
+        np.testing.assert_allclose(y_res,y_test, atol=1e-3)
         
         x_test = np.linspace(-42, -35, samples_count).reshape((samples_count, 1))
         y_test = self.lin_func(x_test, params)
         y_res = reg_func(x_test)
-        np.testing.assert_allclose(y_res,y_test, atol=1e-1)
+        np.testing.assert_allclose(y_res,y_test, atol=1e-3)
 
 if __name__ == "__main__":     
     suite = unittest.TestLoader().loadTestsFromTestCase(LinearTest)
