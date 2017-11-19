@@ -122,5 +122,6 @@ class GradientDescentTest(unittest.TestCase):
         opt = grad(f, tol, desc, expected)
         self.assertEqual(opt.derivative_step, expected)
     
-    
-unittest.main()        
+if __name__ == "__main__":   
+    suite = unittest.TestLoader().loadTestsFromTestCase(GradientDescentTest)
+    unittest.TextTestRunner(verbosity=0).run(suite)       
