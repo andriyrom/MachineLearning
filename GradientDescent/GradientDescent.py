@@ -9,18 +9,21 @@ import numpy as np
 
 class GradientDescent:
     # function -> f(x), where x - numpy.array
-    def __init__(self, function, tol=None, desc_step = None, der_step=None):
+    def __init__(self, function, tol=None, desc_step = None, der_step=None, mom=0):
         self.__tolerance = tol or 0.01
         self.__descent_step = desc_step or self.__tolerance
         self.__derivative_step = der_step or self.__descent_step
+        self.__momentum_rate = mom 
         self.__func = function
     
     def optimize(self, start_point):
         point = start_point.astype("float64")
         gradient = self.calc_grad(point)
+        momentum = gradient * self.__momentum_rate
         new_step = True
         while (new_step):
-            point -= self.__descent_step * gradient
+            momentum = momentum * self.__momentum_rate + self.__descent_step * gradient
+            point -= momentum
             gradient = self.calc_grad(point)
             new_step = np.abs(gradient).max() > self.__tolerance
         return point
