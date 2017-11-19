@@ -6,6 +6,7 @@ Created on Sat Nov 18 16:41:14 2017
 """
 
 import unittest
+import numpy as np
 from Linear import Linear
 
 class LinearTest(unittest.TestCase):
@@ -33,5 +34,6 @@ class LinearTest(unittest.TestCase):
         y_res = reg_func(x_test)
         np.testing.assert_allclose(y_res,y_test, atol=1e-1)
 
-    
-unittest.main()
+if __name__ == "__main__":     
+    suite = unittest.TestLoader().loadTestsFromTestCase(LinearTest)
+    unittest.TextTestRunner(verbosity=0).run(suite)
