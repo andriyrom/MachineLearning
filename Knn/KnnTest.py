@@ -37,7 +37,7 @@ class KnnTest(unittest.TestCase):
         claster2 = np.random.normal(start, 2, size = (count, 2))
         clas2 = np.ones(count)
         x_learn = np.vstack((claster1, claster2))
-        y_learn = np.vstack((clas1, clas2))
+        y_learn = np.hstack((clas1, clas2))
         alg = knn(x_learn, y_learn) 
         
         neighbors = 3
@@ -47,6 +47,12 @@ class KnnTest(unittest.TestCase):
         np.testing.assert_equal(res_y, test_y)
         
         test_x = [-3,-3]
+        test_y = 1
+        res_y = alg.classify(test_x, neighbors)
+        np.testing.assert_equal(res_y, test_y)
+        
+        neighbors = 5
+        test_x = [1,1]
         test_y = 1
         res_y = alg.classify(test_x, neighbors)
         np.testing.assert_equal(res_y, test_y)
