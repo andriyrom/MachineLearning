@@ -9,10 +9,6 @@ import numpy as np
 from Logistic import Logistic, LogisticCustom
 
 class LogisticTest(unittest.TestCase):
-    def lin_func(self, x, params):
-        samples_count = x.shape[0]
-        extended_x = np.hstack((np.ones((samples_count, 1)), x))
-        return extended_x.dot(params)
         
     def testOneParamLogistic(self):
         x_learn = np.array([[-5], [-4], [-1], [0],[3], [7], [4], [12]])
