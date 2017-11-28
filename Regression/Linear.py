@@ -23,18 +23,15 @@ class Linear:
     
     def regression(self):
         params_count = self.__x.shape[1]
-        cost_func = self.__get_cost_func()
         init_vals = self.__init_params(params_count)
-        min_search = grad(cost_func, tol=1e-3, der_step = 1e-5, desc_step = 0.001, mom=0.2)
+        min_search = grad(self.__cost_func, tol=1e-3, der_step = 1e-5, desc_step = 0.001, mom=0.2)
         params = min_search.optimize(init_vals)
         return self.__lin_func(params)
     
-    def __get_cost_func(self):
-        def cost_func(params):
-            expected = self.__x.dot(params)
-            diff = expected-self.__y
-            return 0.5*(diff**2).sum()
-        return cost_func
+    def __cost_func(self, params):
+        expected = self.__x.dot(params)
+        diff = expected-self.__y
+        return 0.5*(diff**2).sum()
     
     def __init_params(self, count):
         raw_vals = np.random.rand(count)

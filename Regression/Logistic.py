@@ -26,18 +26,15 @@ class Logistic:
     
     def regression(self):
         params_count = self.__x.shape[1]
-        cost_func = self.__get_cost_func()
         init_vals = self.__init_params(params_count)
-        min_search = grad(cost_func, tol=0.07, der_step = 1e-5, desc_step = 0.03, mom=0.2)
+        min_search = grad(self.__cost_func, tol=0.07, der_step = 1e-5, desc_step = 0.03, mom=0.2)
         params = min_search.optimize(init_vals)
         return self.__log_func(params)
     
-    def __get_cost_func(self):
-        def cost_func(params):
-            sigm_x = sigmoid(self.__x.dot(params))
-            cost_func_parts = -self.__y * np.log(sigm_x) - (1-self.__y)*np.log(1 - sigm_x)
-            return cost_func_parts.sum()
-        return cost_func
+    def __cost_func(self, params):
+        sigm_x = sigmoid(self.__x.dot(params))
+        cost_func_parts = -self.__y * np.log(sigm_x) - (1-self.__y)*np.log(1 - sigm_x)
+        return cost_func_parts.sum()
     
     def __init_params(self, count):
         raw_vals = np.random.rand(count)
