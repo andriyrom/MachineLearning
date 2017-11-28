@@ -21,10 +21,10 @@ class Linear:
         ones_arr = np.ones((x_vals.shape[0], 1))
         return np.hstack((ones_arr, x_vals))
     
-    def regression(self):
+    def regression(self, tol=1e-3, der_step = 1e-5, learn_rate = 0.001, mom=0.2):
         params_count = self.__x.shape[1]
         init_vals = self.__init_params(params_count)
-        min_search = grad(self.__cost_func, tol=1e-3, der_step = 1e-5, desc_step = 0.001, mom=0.2)
+        min_search = grad(self.__cost_func, tol, learn_rate, der_step, mom)
         params = min_search.optimize(init_vals)
         return self.__lin_func(params)
     
@@ -53,16 +53,16 @@ class LinearCustom:
         ones_arr = np.ones((x_vals.shape[0], 1))
         return np.hstack((ones_arr, x_vals))
     
-    def regression(self):
+    def regression(self, tol = 1e-3, learn_rate = 0.007, mom = 0.09):
         params_count = self.__x.shape[1]
         init_vals = self.__init_params(params_count)
-        params = self.__minimize(init_vals, 1e-3, 0.007, 0.09)
+        params = self.__minimize(init_vals, tol, learn_rate, mom)
         return self.__lin_func(params)
     
     def __minimize(self, init_vals, tolerance, learn_rate, mom_rate):
         point = init_vals.astype("float64")
         gradient = self.__gradient(point)
-        momentum = gradient * mom_rate
+        momentum = 0
         new_step = True
         while (new_step):
             momentum = momentum * mom_rate + learn_rate * gradient

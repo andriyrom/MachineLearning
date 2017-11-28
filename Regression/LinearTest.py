@@ -21,7 +21,7 @@ class LinearTest(unittest.TestCase):
         x_learn = np.linspace(-10, 10, samples_count).reshape((samples_count, 1))
         y_learn = self.lin_func(x_learn, params)
         lin_alg = Linear(x_learn,y_learn)
-        reg_func = lin_alg.regression()
+        reg_func = lin_alg.regression(learn_rate = 0.01, mom=0.5)
         
         samples_count = 10
         x_test = np.linspace(20, 27, samples_count).reshape((samples_count, 1))
@@ -40,7 +40,7 @@ class LinearTest(unittest.TestCase):
         x_learn = np.linspace(-10, 10, samples_count).reshape((samples_count, 1))
         y_learn = self.lin_func(x_learn, params)
         lin_alg = LinearCustom(x_learn,y_learn)
-        reg_func = lin_alg.regression()
+        reg_func = lin_alg.regression(mom=0.5)
         
         samples_count = 10
         x_test = np.linspace(20, 27, samples_count).reshape((samples_count, 1))

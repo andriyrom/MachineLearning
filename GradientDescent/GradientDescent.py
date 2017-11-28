@@ -19,7 +19,7 @@ class GradientDescent:
     def optimize(self, start_point):
         point = start_point.astype("float64")
         gradient = self.calc_grad(point)
-        momentum = gradient * self.__momentum_rate
+        momentum = 0
         new_step = True
         while (new_step):
             momentum = momentum * self.__momentum_rate + self.__descent_step * gradient
